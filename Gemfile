@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'devise'
 gem 'materialize-sass'
+gem 'boostrap-sass'
 gem "paperclip", "~> 5.0.0.beta1"
 gem 'simple_form'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
