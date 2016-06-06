@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     before_action :set_post, only: [:show, :edit, :update, :destroy]
-    before_action :authenticate_user!  
+    before_action :authenticate_user!
     def post_params
         params.require(:post).permit(:image, :caption)
     end
@@ -11,14 +11,16 @@ class PostsController < ApplicationController
         @post = Post.all
     end
     def new
-        @post = Post.new
+        @post = current_user.posts.build
     end
     def create
-        if @post = Post.create(post_params)
-            flash[:success] = "P0ST SUC3SSFUL"
-            redirect_to posts_path
+        @post = current_user.posts.build(post_params)
+        if @post.save
+          flash[:success] = "P0ST SUC3SSFUL"
+          redirect_to posts_path
         else
-            flash[:alert] = "SYSTM FA1LUR3 -- P0ST DESTR0Y3D"
+          flash[:alert] = "SYSTM FA1LUR3 -- P0ST DESTR0Y3D"
+          render :new
         end
     end
     def show
