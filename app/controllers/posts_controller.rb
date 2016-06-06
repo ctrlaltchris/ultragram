@@ -13,24 +13,29 @@ class PostsController < ApplicationController
         @post = Post.new
     end
     def create
-        @post = Post.create(post_params)
-        redirect_to posts_path
-    end
-    def post_params
-        params.require(:post).permit(:image, :caption)
-    end
-    def set_post
+        if @post = Post.create(post_params)
+            flash[:success] = "P0ST SUC3SSFUL"
+            redirect_to posts_path
+        else
+            flash[:alert] = "SYSTM FA1LUR3 -- P0ST DESTR0Y3D"
+        end
     end
     def show
     end
     def edit
     end
     def update
-        @post = Post.update(post_params)
-        redirect_to (posts_path(@post))
+        if @post.update(post_params)
+            flash[:success] = "P0ST SUC3SSFUL"
+            redirect_to posts_path
+        else
+            flash.now[:alert] = "SYSTM FA1LUR3 -- P0ST DESTR0Y3D"
+            render :edit
+        end
     end
     def destroy
         @post.destroy
+        flash.now[:success] = "P0ST DESTR0Y3D"
         redirect_to posts_path
     end
 end
